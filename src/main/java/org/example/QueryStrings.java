@@ -1,0 +1,31 @@
+package org.example;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class QueryStrings {
+    private List<QueryString> queryStrings = new ArrayList<>();
+
+    public QueryStrings(String queryString) {
+        String[] queryStringTokens = queryString.split("&");
+        Arrays.stream(queryStringTokens)
+                .forEach(
+                        qs -> {
+                            String[] values = qs.split("=");
+                            if (values.length != 2) {
+                                throw new IllegalArgumentException("잘못된 query string 포맷을 가진 문자열입니다.");
+                            }
+                            queryStrings.add(new QueryString(values[0], values[1]));
+                        }
+                );
+    }
+
+    public String getValue(String key) {
+        return this.queryStrings.stream()
+                .filter( queryString -> queryString.exists(key))
+                .map(QueryString::getValue)
+                .findFirst()
+                .orElse(null);
+    }
+}
