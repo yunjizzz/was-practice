@@ -16,5 +16,5 @@ Web application server는 어떻게 동작할까?
 - 동시 접속자수가 많아질 경우 cpu, 메모리 사용량이 증가해 서버 리소스 사용량이 증가해 최악의 경우 서버가 다운 될 수도 있다.
 - 이를 방지하기 위해 step3에서는 Thread Pool을 적용해보자.
 
-### step3
+### step3 52b06ae921de904dcf70578b675fa89f11c30fa8
 - Thread pool을 이용해서 안정적으로 Thread를 관리할 수 있도록  하자.
