@@ -9,10 +9,14 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class CustomWebApplicationServer {
 
     private final int port;
+
+    private final ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     private static final Logger logger = LoggerFactory.getLogger(CustomWebApplicationServer.class);
 
@@ -30,8 +34,8 @@ public class CustomWebApplicationServer {
             while((clientSocket = serverSocket.accept()) != null){
                 logger.info("[CustomWebApplicationServer] client connected ! ");
 
-                //  별도 스레드를 만들어서 요청이 들어올 때마다 생성되도록 함
-                new Thread(new ClientRequestHandler(clientSocket)).start();
+                // thread pool 적용
+                executorService.execute(new ClientRequestHandler(clientSocket));
             }
         }
     }
